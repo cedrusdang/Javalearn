@@ -1,102 +1,191 @@
-# Chương trình học Java bằng tiếng Việt
+# Lộ trình Bootcamp Java 21
 
 ## Mục lục
-1. [Giới thiệu](#giới-thiệu)
-2. [Lộ trình học](#lộ-trình-học)
-   - [Từ cơ bản đến nâng cao](#từ-cơ-bản-đến-nâng-cao)
-3. [Lập trình hướng đối tượng (OOP)](#lập-trình-hướng-đối-tượng-oop)
-4. [Collections](#collections)
-5. [Generics](#generics)
-6. [Ngoại lệ (Exceptions)](#ngoại-lệ-exceptions)
-7. [Nhập/Xuất (I/O)](#nhậpxuất-io)
-8. [Đa luồng (Concurrency)](#đa-luồng-concurrency)
-9. [JVM và GC](#jvm-và-gc)
-10. [Kiểm thử (Testing)](#kiểm-thử-testing)
-11. [Công cụ xây dựng (Maven/Gradle)](#công-cụ-xây-dựng-mavengradle)
-12. [Quy trình Git (Git Workflow)](#quy-trình-git-git-workflow)
-13. [Frameworks](#frameworks)
-   - [Spring](#spring)
-   - [Spring Boot](#spring-boot)
-   - [JPA/Hibernate](#jpahibernate)
-   - [REST](#rest)
-14. [Bài tập và ý tưởng dự án](#bài-tập-và-ý-tưởng-dự-án)
-15. [Cấu trúc dự án](#cấu-trúc-dự-án)
-16. [Lịch trình học](#lịch-trình-học)
+1. Giới thiệu
+2. Ngày 1: Làm quen với Java
+3. Ngày 2: Các kiểu dữ liệu trong Java
+4. Ngày 3: Cấu trúc điều kiện và vòng lặp
+5. Ngày 4: Hàm và phương thức
+6. Ngày 5: Lập trình hướng đối tượng
+7. Ngày 6: Collections Framework
+8. Ngày 7: Generics trong Java
+9. Ngày 8: Xử lý ngoại lệ
+10. Ngày 9: Nhập xuất (I/O) và NIO
+11. Ngày 10: Lập trình đồng thời
+12. Ngày 11: Hiểu về JVM và GC
+13. Ngày 12: Công cụ xây dựng - Maven & Gradle
+14. Ngày 13: Kiểm thử - JUnit, Mockito, Testcontainers
+15. Ngày 14: Logging
+16. Ngày 15: Xây dựng và đóng gói ứng dụng
+17. Ngày 16: Quy trình làm việc với Git
+18. Ngày 17: Kiến trúc phần mềm
+19. Ngày 18: Cơ sở dữ liệu và SQL
+20. Ngày 19: JDBC
+21. Ngày 20: JPA & Hibernate
+22. Ngày 21: Spring Core
+23. Ngày 22: Spring Boot
+24. Ngày 23: RESTful Services
+25. Ngày 24: An ninh ứng dụng
+26. Ngày 25: Xác thực và xác minh
+27. Ngày 26: OpenAPI
+28. Ngày 27: Tin nhắn (Kafka/RabbitMQ)
+29. Ngày 28: Lưu trữ (Redis)
+30. Ngày 29: Docker
+31. Ngày 30: CI/CD với GitHub Actions
+32. Ngày 31: Triển khai ứng dụng
+33. Ngày 32: Tối ưu hiệu suất
+34. Ngày 33: Khắc phục sự cố
+35. Ngày 34: Bài tập và thực hành
+36. Ngày 35: Dự án thực tế
+37. Tài nguyên tham khảo
 
-## Giới thiệu
-Chương trình học này giúp bạn nắm vững các kiến thức cần thiết để trở thành một lập trình viên Java chuyên nghiệp. 
+## Lộ trình chi tiết
+### Ngày 1: Làm quen với Java
+- Giới thiệu về Java và môi trường phát triển.
+- Cài đặt JDK và IDE.
 
-## Lộ trình học
-### Từ cơ bản đến nâng cao
-- Bắt đầu với Java cơ bản: cấu trúc chương trình, cú pháp, kiểu dữ liệu, và cấu trúc điều khiển.
-- Tiến tới OOP: lớp, đối tượng, kế thừa, và đa hình.
-- Khám phá các thư viện tiêu chuẩn như Collections và Generics.
-- Nắm vững xử lý ngoại lệ và nhập/xuất dữ liệu.
-- Học về đa luồng và quản lý bộ nhớ trong Java.
-- Tìm hiểu về kiểm thử, công cụ xây dựng và quy trình Git.
-- Cuối cùng, làm quen với các framework và công nghệ hiện đại.
+### Ngày 2: Các kiểu dữ liệu trong Java
+- Khám phá các kiểu dữ liệu cơ bản.
+- Thực hành với các biến.
 
-## Lập trình hướng đối tượng (OOP)
-- Khái niệm về OOP, lớp, đối tượng, phương thức, và thuộc tính.
-- Các nguyên tắc OOP: kế thừa, đóng gói, và đa hình.
+### Ngày 3: Cấu trúc điều kiện và vòng lặp
+- Sử dụng câu lệnh if, switch.
+- Làm quen với vòng lặp for, while.
 
-## Collections
-- Các loại collection: List, Set, Map.
-- Cách sử dụng và ưu điểm của từng loại collection.
+### Ngày 4: Hàm và phương thức
+- Định nghĩa hàm và phương thức.
+- Sử dụng tham số và giá trị trả về.
 
-## Generics
-- Tại sao cần Generics trong Java.
-- Cách sử dụng Generics để tăng cường an toàn kiểu dữ liệu.
+### Ngày 5: Lập trình hướng đối tượng
+- Các nguyên lý của OOP (Encapsulation, Inheritance, Polymorphism).
+- Tạo lớp và đối tượng.
 
-## Ngoại lệ (Exceptions)
-- Khái niệm về ngoại lệ trong Java.
-- Cách xử lý ngoại lệ bằng try-catch-finally và custom exceptions.
+### Ngày 6: Collections Framework
+- Làm quen với danh sách, tập hợp và bản đồ.
+- Sử dụng Iterators.
 
-## Nhập/Xuất (I/O)
-- Khái niệm nhập/xuất trong Java.
-- Sử dụng các lớp I/O cơ bản: File, InputStream, OutputStream, Reader, Writer.
+### Ngày 7: Generics trong Java
+- Hiểu về Generics và cách sử dụng.
+- Tạo lớp và phương thức Generic.
 
-## Đa luồng (Concurrency)
-- Khái niệm về đa luồng trong Java.
-- Sử dụng Thread, Runnable, và các công cụ đồng bộ.
+### Ngày 8: Xử lý ngoại lệ
+- Sử dụng try-catch để xử lý ngoại lệ.
+- Tạo ngoại lệ tùy chỉnh.
 
-## JVM và GC
-- Khái niệm về Java Virtual Machine.
-- Cách Java quản lý bộ nhớ và quy trình garbage collection.
+### Ngày 9: Nhập xuất (I/O) và NIO
+- Làm việc với InputStream và OutputStream.
+- Sử dụng NIO cho thao tác file nhanh chóng.
 
-## Kiểm thử (Testing)
-- Tầm quan trọng của kiểm thử trong phát triển phần mềm.
-- Sử dụng JUnit và các công cụ kiểm thử khác.
+### Ngày 10: Lập trình đồng thời
+- Khái niệm về Thread và Runnable.
+- Đồng bộ hóa và quản lý tác vụ.
 
-## Công cụ xây dựng (Maven/Gradle)
-- Giới thiệu về Maven và Gradle.
-- Cách sử dụng các công cụ này để quản lý dự án Java.
+### Ngày 11: Hiểu về JVM và GC
+- Cấu trúc của JVM.
+- Các thuật toán Garbage Collection.
 
-## Quy trình Git (Git Workflow)
-- Các lệnh Git cơ bản: clone, commit, push, pull.
-- Tầm quan trọng của quy trình Git trong phát triển phần mềm.
+### Ngày 12: Công cụ xây dựng - Maven & Gradle
+- Khởi tạo project với Maven và Gradle.
+- Quản lý phụ thuộc thư viện.
 
-## Frameworks
-### Spring
-- Giới thiệu về Spring Framework và các tính năng chính.
+### Ngày 13: Kiểm thử - JUnit, Mockito, Testcontainers
+- Viết và chạy các bài kiểm thử.
+- Sử dụng Mockito để giả lập.
 
-### Spring Boot
-- Tạo ứng dụng với Spring Boot và cấu hình tự động.
+### Ngày 14: Logging
+- Thiết lập logging cho ứng dụng.
+- Sử dụng log4j hoặc SLF4J.
 
-### JPA/Hibernate
-- Cách sử dụng JPA và Hibernate để kết nối cơ sở dữ liệu.
+### Ngày 15: Xây dựng và đóng gói ứng dụng
+- Tạo file JAR và WAR.
+- Xây dựng ứng dụng cho môi trường sản xuất.
 
-### REST
-- Xây dựng dịch vụ RESTful với Spring.
+### Ngày 16: Quy trình làm việc với Git
+- Các lệnh Git cơ bản và workflow.
+- Quản lý nhánh và merge.
 
-## Bài tập và ý tưởng dự án
-- Xây dựng một ứng dụng quản lý sách với CRUD.
-- Thiết kế một dịch vụ RESTful đơn giản cho một blog.
+### Ngày 17: Kiến trúc phần mềm
+- Kiến trúc MVC và Microservices.
+- Thiết kế hệ thống vững vàng.
 
-## Cấu trúc dự án
-- Thông tin về cách tổ chức mã nguồn trong dự án Java.
+### Ngày 18: Cơ sở dữ liệu và SQL
+- Thiết kế cơ sở dữ liệu và thực hiện truy vấn SQL.
+- Kết nối Java với DB.
 
-## Lịch trình học
-- Phân chia thời gian học qua từng phần: cơ bản, OOP, Collections, v.v.
-- Đề xuất lịch trình học trong 6 tháng.
+### Ngày 19: JDBC
+- Làm việc với JDBC để thao tác cơ sở dữ liệu.
+- Quản lý kết nối và thực thi truy vấn.
 
+### Ngày 20: JPA & Hibernate
+- Giới thiệu về JPA và Hibernate.
+- Mapping giữa đối tượng Java và DB.
+
+### Ngày 21: Spring Core
+- Thiết lập ứng dụng Spring.
+- IOC và DI trong Spring.
+
+### Ngày 22: Spring Boot
+- Khởi tạo ứng dụng với Spring Boot.
+- Các thông tin cấu hình cần thiết.
+
+### Ngày 23: RESTful Services
+- Xây dựng API REST với Spring.
+- Các phương thức HTTP và JSON.
+
+### Ngày 24: An ninh ứng dụng
+- Thực hiện xác thực người dùng.
+- Các phương pháp bảo mật.
+
+### Ngày 25: Xác thực và xác minh
+- Sử dụng Spring Security để xác minh người dùng.
+- Xử lý thông tin nhạy cảm.
+
+### Ngày 26: OpenAPI
+- Tạo tài liệu API với OpenAPI.
+- Công cụ Swagger.
+
+### Ngày 27: Tin nhắn (Kafka/RabbitMQ)
+- Thiết lập hệ thống tin nhắn với Kafka/RabbitMQ.
+- Thực hiện giao tiếp giữa các dịch vụ.
+
+### Ngày 28: Lưu trữ (Redis)
+- Sử dụng Redis cho lưu trữ tạm thời.
+- Các ứng dụng caching.
+
+### Ngày 29: Docker
+- Tạo container cho ứng dụng Java.
+- Quản lý tài nguyên với Docker.
+
+### Ngày 30: CI/CD với GitHub Actions
+- Tự động hóa deploy với GitHub Actions.
+- Cấu hình pipeline.
+
+### Ngày 31: Triển khai ứng dụng
+- Các phương pháp triển khai.
+- Quản lý môi trường và cấu hình.
+
+### Ngày 32: Tối ưu hiệu suất
+- Đánh giá và tối ưu hiệu năng ứng dụng.
+- Các công cụ theo dõi.
+
+### Ngày 33: Khắc phục sự cố
+- Các bước khắc phục sự cố.
+- Thực hành giải quyết lỗi.
+
+### Ngày 34: Bài tập và thực hành
+- Thực hiện các bài tập để củng cố kiến thức.
+- Kiểm tra và rút ra bài học.
+
+### Ngày 35: Dự án thực tế
+- Làm việc nhóm để triển khai dự án.
+- Trình bày và bảo vệ dự án trước hội đồng.
+
+### Tài nguyên tham khảo
+- [Java Documentation](https://docs.oracle.com/en/java/)
+- [Spring Documentation](https://spring.io/docs)
+- [TutorialsPoint](https://www.tutorialspoint.com/java/index.htm)
+- ...
+
+---
+- Chúc mừng bạn đã hoàn thành lộ trình!
+- Hãy dành thời gian để thực hành và cải thiện kỹ năng của mình!
