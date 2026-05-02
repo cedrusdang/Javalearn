@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/styles.css">
+    <title>Learning Platform</title>
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Bilingual Learning Platform</h2>
+        <button id="toggleLanguage">Switch to English</button>
+    </div>
+    <div class="content">
+        <h1 id="mainTitle">Giới thiệu về Java 21 / Introduction to Java 21</h1>
+        <div id="lessons">
+            <!-- Lessons will be injected here -->
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search lessons...">
+        </div>
+    </div>
+    <script>
+        const lessons = [
+            { title: 'Bài học 1 - Giới thiệu Java', content: '......' },
+            { title: 'Lesson 1 - Introduction to Java', content: '......' },
+            // More lessons here
+        ];
+
+        function loadLessons() {
+            const lessonsContainer = document.getElementById('lessons');
+            lessons.forEach(lesson => {
+                const lessonDiv = document.createElement('div');
+                lessonDiv.innerHTML = `<h3>${lesson.title}</h3><p>${lesson.content}</p>`;
+                lessonsContainer.appendChild(lessonDiv);
+            });
+        }
+
+        document.getElementById('toggleLanguage').addEventListener('click', function() {
+            // Logic to toggle between languages
+        });
+
+        loadLessons();
+    </script>
+</body>
+</html>
