@@ -1,47 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Bootcamp Book | From Python/JS/R to Full-Stack Java</title>
     <link rel="stylesheet" href="assets/styles.css">
-    <title>Learning Platform</title>
     <script src="assets/scripts.js" defer></script>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Bilingual Learning Platform</h2>
-        <button id="toggleLanguage">Switch to English</button>
-    </div>
-    <div class="content">
-        <h1 id="mainTitle">Giới thiệu về Java 21 / Introduction to Java 21</h1>
-        <div id="lessons">
-            <!-- Lessons will be injected here -->
+    <div class="book-shell">
+        <header class="topbar reveal">
+            <div class="brand">
+                <div class="brand-badge">JAVA</div>
+                <div>
+                    <h1>Java Engineering Bootcamp Book</h1>
+                    <p>Designed for developers experienced with Python, JavaScript, and R</p>
+                </div>
+            </div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+
+        <div class="grid">
+            <aside class="sidebar reveal">
+                <h2>Book Chapters</h2>
+                <ul class="nav-list">
+                    <li><a href="index.html">0. Start Here</a></li>
+                    <li><a href="install-config.html">0.5 Install and Config</a></li>
+                    <li><a href="core-syntax.html">1. Core Syntax and OOP</a></li>
+                    <li><a href="modern-java.html">2. Modern Java (17-25)</a></li>
+                    <li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li>
+                    <li><a href="backend-enterprise.html">4. Backend Engineering</a></li>
+                    <li><a href="frontend-java.html">5. Frontend with Java</a></li>
+                    <li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li>
+                    <li><a href="mobile-android.html">7. Mobile with Java/Android</a></li>
+                    <li><a href="architecture-design.html">8. Architecture and Design Theory</a></li>
+                    <li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li>
+                    <li><a href="tutorials.html">10. Guided Tutorials</a></li>
+                    <li><a href="handbook.html">11. Code Snippet Handbook</a></li>
+                    <li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+                </ul>
+            </aside>
+
+            <main class="content reveal">
+                <section class="hero">
+                    <h2>Complete Java Book: Heavy Theory + Real Practice</h2>
+                    <p>
+                        This multi-page book is a bootcamp-style curriculum that moves you from language transfer
+                        (Python/JS/R mindset) to production-grade Java engineering across backend, frontend, desktop,
+                        and mobile. It includes architecture principles, modern Java updates, and practical coding
+                        handbooks by case.
+                    </p>
+                    <p class="note">
+                        Scope: Java 17 to Java 25 practices, enterprise backend (Spring), Java-based web UI options,
+                        desktop apps (JavaFX), Android with Java, testing strategy, DevOps flow, and capstone execution.
+                    </p>
+                </section>
+
+                <section class="section">
+                    <h3>How to Use This Book</h3>
+                    <ol>
+                        <li>Start with Chapter 0.5 to install and configure your full toolchain.</li>
+                        <li>Read chapters in order from 1 to 9 for foundations and systems thinking.</li>
+                        <li>Implement tutorials in Chapter 10 in your own repository.</li>
+                        <li>Use Chapter 11 as a daily engineering handbook for real-world tasks.</li>
+                        <li>Follow Chapter 12 for a complete bootcamp-grade capstone delivery.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>Learning Outcomes</h3>
+                    <div class="card-grid">
+                        <article class="card">
+                            <h4>Language Mastery</h4>
+                            <p>Write idiomatic Java with strong type modeling, OOP discipline, streams, concurrency, and modern syntax.</p>
+                        </article>
+                        <article class="card">
+                            <h4>Backend Delivery</h4>
+                            <p>Build secure and maintainable APIs, asynchronous services, data pipelines, and domain-driven services.</p>
+                        </article>
+                        <article class="card">
+                            <h4>UI Platforms</h4>
+                            <p>Deliver Java-powered experiences on web (server-side Java UI), desktop (JavaFX), and Android mobile.</p>
+                        </article>
+                        <article class="card">
+                            <h4>Architecture Thinking</h4>
+                            <p>Choose patterns by context: layered, hexagonal, event-driven, CQRS, and modular monolith.</p>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3>Quick Jump</h3>
+                    <div class="chapter-links">
+                        <a href="install-config.html">Setup First</a>
+                        <a href="core-syntax.html">Start Chapter 1</a>
+                        <a href="tutorials.html">Go to Tutorials</a>
+                        <a href="handbook.html">Open Snippet Handbook</a>
+                        <a href="capstone-roadmap.html">See Capstone Plan</a>
+                    </div>
+                </section>
+
+                <p class="footer">English-only content. Theme toggle works globally and is persisted in local storage.</p>
+            </main>
         </div>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search lessons...">
-        </div>
     </div>
-    <script>
-        const lessons = [
-            { title: 'Bài học 1 - Giới thiệu Java', content: '......' },
-            { title: 'Lesson 1 - Introduction to Java', content: '......' },
-            // More lessons here
-        ];
-
-        function loadLessons() {
-            const lessonsContainer = document.getElementById('lessons');
-            lessons.forEach(lesson => {
-                const lessonDiv = document.createElement('div');
-                lessonDiv.innerHTML = `<h3>${lesson.title}</h3><p>${lesson.content}</p>`;
-                lessonsContainer.appendChild(lessonDiv);
-            });
-        }
-
-        document.getElementById('toggleLanguage').addEventListener('click', function() {
-            // Logic to toggle between languages
-        });
-
-        loadLessons();
-    </script>
 </body>
 </html>

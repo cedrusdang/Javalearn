@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7 | Mobile with Java and Android</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH7</div><div><h1>Mobile with Java and Android</h1><p>Java-first Android engineering with modern architecture</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Android: Java Still Matters</h2>
+                    <p>Even with Kotlin growth, Java remains critical in Android legacy codebases, SDK integrations, and mixed-language apps. As a Java engineer, you can deliver robust Android systems by mastering architecture and lifecycle discipline.</p>
+                </section>
+
+                <section class="section">
+                    <h3>7.1 Mobile Architecture (Java Edition)</h3>
+                    <ul>
+                        <li>Presentation: Activities/Fragments + ViewModel.</li>
+                        <li>Domain: use-cases and business services.</li>
+                        <li>Data: repository pattern with local + remote sources.</li>
+                        <li>Async: coroutines in Kotlin modules or Java executors/reactive wrappers.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>7.2 Network + Repository Example</h3>
+                    <pre><code>public final class ProfileRepository {
+    private final ProfileApi api;
+    private final Executor ioExecutor;
+
+    public ProfileRepository(ProfileApi api, Executor ioExecutor) {
+        this.api = api;
+        this.ioExecutor = ioExecutor;
+    }
+
+    public void loadProfile(String userId, Consumer&lt;Profile&gt; onSuccess, Consumer&lt;Throwable&gt; onError) {
+        ioExecutor.execute(() -> {
+            try {
+                Profile profile = api.fetchProfile(userId);
+                onSuccess.accept(profile);
+            } catch (Throwable t) {
+                onError.accept(t);
+            }
+        });
+    }
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>7.3 Lifecycle and State Rules</h3>
+                    <ol>
+                        <li>No business logic in Activities.</li>
+                        <li>Handle offline-first UX for unstable networks.</li>
+                        <li>Use background-safe scheduling for sync jobs.</li>
+                        <li>Guard every external call with timeouts and retries.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>7.4 Security on Mobile</h3>
+                    <ul>
+                        <li>Store secrets using Android Keystore.</li>
+                        <li>Use certificate pinning for sensitive APIs.</li>
+                        <li>Never trust client-side authorization checks alone.</li>
+                        <li>Audit SDK permissions and data exfiltration risks.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

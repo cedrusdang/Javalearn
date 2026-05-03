@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4 | Backend Engineering</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH4</div><div><h1>Backend Engineering with Java</h1><p>Spring Boot, data, security, and distributed systems fundamentals</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar">
+                <h2>Book Chapters</h2>
+                <ul class="nav-list">
+                    <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li>
+                    <li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li>
+                    <li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li>
+                    <li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li>
+                    <li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li>
+                    <li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li>
+                    <li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+                </ul>
+            </aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Production Backend: Domain Logic, Not Controller Spaghetti</h2>
+                    <p>The biggest backend mistake is coupling transport layer and business rules. Separate API contracts, application services, domain model, and persistence adapters.</p>
+                </section>
+
+                <section class="section">
+                    <h3>4.1 Clean Layering Blueprint</h3>
+                    <ul>
+                        <li>Controller: input validation and response mapping.</li>
+                        <li>Application service: orchestrates use-case workflows.</li>
+                        <li>Domain: entities, value objects, policies, invariants.</li>
+                        <li>Infrastructure: databases, queues, external APIs.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>4.2 Example Spring API Slice</h3>
+                    <pre><code>@RestController
+@RequestMapping("/api/orders")
+class OrderController {
+    private final CreateOrderService createOrderService;
+
+    OrderController(CreateOrderService createOrderService) {
+        this.createOrderService = createOrderService;
+    }
+
+    @PostMapping
+    ResponseEntity&lt;OrderResponse&gt; create(@RequestBody @Valid CreateOrderRequest request) {
+        var result = createOrderService.execute(request.customerId(), request.lines());
+        return ResponseEntity.status(HttpStatus.CREATED).body(OrderResponse.from(result));
+    }
+}</code></pre>
+                    <p>Notice what is absent: no repository logic in the controller.</p>
+                </section>
+
+                <section class="section">
+                    <h3>4.3 Persistence Strategy</h3>
+                    <ul>
+                        <li>Transactional commands: JPA or JDBC with explicit boundaries.</li>
+                        <li>Read-heavy queries: projections, read models, or SQL-first approach.</li>
+                        <li>Use outbox pattern for reliable event publication.</li>
+                    </ul>
+                    <pre><code>@Transactional
+public Order createOrder(CreateOrderCommand cmd) {
+    Order order = Order.create(cmd.customerId(), cmd.lines());
+    orderRepository.save(order);
+    outboxRepository.enqueue("order.created", order.id().toString(), order.toJson());
+    return order;
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>4.4 Security Baseline</h3>
+                    <ul>
+                        <li>OAuth2/OIDC for identity delegation.</li>
+                        <li>JWT validation + authorization by role/permission.</li>
+                        <li>Input validation and output encoding for trust boundaries.</li>
+                        <li>Rate limits + audit logs for sensitive operations.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>4.5 Async and Messaging</h3>
+                    <pre><code>@KafkaListener(topics = "payment-events", groupId = "billing")
+public void consume(PaymentEvent event) {
+    switch (event.type()) {
+        case "PAYMENT_CONFIRMED" -> billingService.markPaid(event.orderId());
+        case "PAYMENT_FAILED" -> billingService.markFailed(event.orderId(), event.reason());
+        default -> throw new IllegalStateException("Unknown event type");
+    }
+}</code></pre>
+                    <p>Design consumers as idempotent handlers: same message can be processed more than once safely.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

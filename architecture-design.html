@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8 | Architecture and Design Theory</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH8</div><div><h1>Architecture and Design Theory</h1><p>How senior engineers reason about systems</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Theory Drives Delivery Quality</h2>
+                    <p>Without architecture theory, teams overfit to local optimizations and produce fragile systems. This chapter teaches decision frameworks: coupling/cohesion, bounded contexts, consistency models, trade-off economics, and socio-technical design.</p>
+                </section>
+
+                <section class="section">
+                    <h3>8.1 SOLID, But Applied with Context</h3>
+                    <ul>
+                        <li>S: organize by behavior and policy, not by framework annotations.</li>
+                        <li>O: prefer composable strategies and extension points.</li>
+                        <li>L: enforce substitutability in contracts and tests.</li>
+                        <li>I: avoid interface inflation; split by client need.</li>
+                        <li>D: point business policies inward; infrastructure outward.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>8.2 Architecture Patterns Decision Guide</h3>
+                    <div class="card-grid">
+                        <article class="card"><h4>Layered</h4><p>Simple domains, small teams, fast onboarding.</p></article>
+                        <article class="card"><h4>Hexagonal</h4><p>Need portability across adapters and explicit boundaries.</p></article>
+                        <article class="card"><h4>Modular Monolith</h4><p>High cohesion with operational simplicity.</p></article>
+                        <article class="card"><h4>Microservices</h4><p>Only when team topology and domain scale justify distributed complexity.</p></article>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3>8.3 Domain-Driven Design Core</h3>
+                    <ul>
+                        <li>Bounded context defines language and model ownership.</li>
+                        <li>Aggregate enforces transaction consistency boundary.</li>
+                        <li>Domain events express meaningful state transitions.</li>
+                    </ul>
+                    <pre><code>public final class OrderAggregate {
+    private final OrderId id;
+    private OrderStatus status;
+
+    public List&lt;DomainEvent&gt; confirmPayment(PaymentId paymentId) {
+        if (status != OrderStatus.PENDING_PAYMENT) {
+            throw new IllegalStateException("Order cannot be paid in state " + status);
+        }
+        status = OrderStatus.PAID;
+        return List.of(new OrderPaid(id, paymentId));
+    }
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>8.4 Distributed Systems Theory in Practice</h3>
+                    <ol>
+                        <li>Consistency model: strong vs eventual consistency by user impact.</li>
+                        <li>Failure model: assume partial failures and retries.</li>
+                        <li>Observability model: metrics, logs, traces from day one.</li>
+                        <li>Cost model: optimize for total cost of ownership, not local performance only.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>8.5 Design Review Rubric</h3>
+                    <ul>
+                        <li>What business invariant is protected by this design?</li>
+                        <li>What are the failure modes and fallback paths?</li>
+                        <li>How observable is this component in production?</li>
+                        <li>Can another team safely evolve this API?</li>
+                        <li>What is the migration path if assumptions change?</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>8.6 Quality Attributes and Trade-Offs</h3>
+                    <p>Architecture is optimization under constraints. Improving one quality attribute often costs another.</p>
+                    <ul>
+                        <li>Latency vs consistency: stronger consistency can increase response time.</li>
+                        <li>Throughput vs debuggability: asynchronous pipelines can reduce transparency.</li>
+                        <li>Modularity vs performance: extra boundaries can add serialization and network cost.</li>
+                        <li>Security vs developer speed: stricter controls require more process discipline.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>8.7 CAP/PACELC Decision Lens</h3>
+                    <p>In distributed systems, trade-offs are unavoidable. Use CAP/PACELC as a thinking framework, not a slogan.</p>
+                    <ol>
+                        <li>CAP event: if partition happens, choose consistency or availability by business criticality.</li>
+                        <li>PACELC normal mode: even without partition, choose between latency and consistency.</li>
+                        <li>Document your choice with user-impact examples and rollback strategy.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>8.8 ADR Template (Architecture Decision Record)</h3>
+                    <pre><code># ADR-007: Choose Modular Monolith for Commerce Core
+
+## Status
+Accepted
+
+## Context
+Team size is 9 engineers. Domain boundaries are still evolving.
+
+## Decision
+Implement modular monolith with strict package boundaries and event-based module integration.
+
+## Consequences
+Positive: simpler deployment and easier debugging.
+Negative: requires discipline to avoid accidental coupling.</code></pre>
+                    <p class="note">Strong architecture teams write ADRs continuously and revisit them when assumptions change.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

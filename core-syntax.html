@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1 | Core Syntax and OOP</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-badge">CH1</div>
+                <div><h1>Core Syntax and OOP</h1><p>Mindset transfer from Python, JavaScript, and R</p></div>
+            </div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar">
+                <h2>Book Chapters</h2>
+                <ul class="nav-list">
+                    <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li>
+                    <li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li>
+                    <li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li>
+                    <li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li>
+                    <li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li>
+                    <li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li>
+                    <li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+                </ul>
+            </aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Java Is Strict by Design, and That Is Its Superpower</h2>
+                    <p>Python gives runtime flexibility, JavaScript gives event-driven ubiquity, R gives vectorized data fluency. Java gives explicit models and long-term maintainability through strong types, compile-time guarantees, and powerful runtime tooling.</p>
+                </section>
+
+                <section class="section">
+                    <h3>1.1 Type System Transfer</h3>
+                    <ul>
+                        <li>From Python: replace duck typing with interfaces and generics.</li>
+                        <li>From JavaScript: replace prototype dynamics with explicit class contracts.</li>
+                        <li>From R: represent tabular/data workflows via immutable records and stream pipelines.</li>
+                    </ul>
+                    <p class="note">Rule for ex-dynamic-language developers: in Java, model your domain first, then implement behavior.</p>
+                </section>
+
+                <section class="section">
+                    <h3>1.2 Core Syntax Patterns</h3>
+                    <pre><code>public final class Money {
+    private final String currency;
+    private final long cents;
+
+    public Money(String currency, long cents) {
+        if (currency == null || currency.isBlank()) {
+            throw new IllegalArgumentException("currency is required");
+        }
+        this.currency = currency;
+        this.cents = cents;
+    }
+
+    public String currency() { return currency; }
+    public long cents() { return cents; }
+
+    public Money add(Money other) {
+        if (!currency.equals(other.currency)) {
+            throw new IllegalArgumentException("Cannot add different currencies");
+        }
+        return new Money(currency, cents + other.cents);
+    }
+}</code></pre>
+                    <p>Use immutable value objects for business invariants. This gives safer concurrency, fewer side effects, and easier tests.</p>
+                </section>
+
+                <section class="section">
+                    <h3>1.3 OOP Done Correctly</h3>
+                    <h4>Principle: Composition over Inheritance</h4>
+                    <pre><code>interface PricePolicy {
+    long computeFinalCents(long baseCents);
+}
+
+final class SeasonalDiscount implements PricePolicy {
+    private final int percent;
+    SeasonalDiscount(int percent) { this.percent = percent; }
+
+    @Override
+    public long computeFinalCents(long baseCents) {
+        return baseCents - (baseCents * percent / 100);
+    }
+}</code></pre>
+                    <p>Instead of subclassing every product type, inject policy strategies. This follows Open/Closed and keeps your codebase flexible.</p>
+                </section>
+
+                <section class="section">
+                    <h3>1.4 Error Handling and API Contracts</h3>
+                    <ul>
+                        <li>Use checked exceptions for recoverable boundary operations (IO, network, parsing).</li>
+                        <li>Use unchecked exceptions for programming errors or violated invariants.</li>
+                        <li>Document thrown exceptions and return semantics in public APIs.</li>
+                    </ul>
+                    <pre><code>public User loadUser(String id) throws IOException {
+    try (var reader = Files.newBufferedReader(Path.of("users.csv"))) {
+        return reader.lines()
+            .map(this::toUser)
+            .filter(u -> u.id().equals(id))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException("User not found: " + id));
+    }
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>1.5 Generics for Real Projects</h3>
+                    <pre><code>public interface Repository&lt;ID, T&gt; {
+    Optional&lt;T&gt; findById(ID id);
+    T save(T entity);
+    void deleteById(ID id);
+}</code></pre>
+                    <p>Generics enable reusable infrastructure with compile-time safety. For ex-Python/JS developers, this is a major productivity shift once internalized.</p>
+                </section>
+
+                <section class="section">
+                    <h3>Exercises</h3>
+                    <ol>
+                        <li>Model an invoicing domain with immutable value objects and typed identifiers.</li>
+                        <li>Refactor a class hierarchy into strategy-based composition.</li>
+                        <li>Build a typed repository contract and two in-memory implementations.</li>
+                    </ol>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

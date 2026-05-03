@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9 | Testing, DevOps, Delivery</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH9</div><div><h1>Testing, DevOps, Delivery</h1><p>Make correctness and reliability repeatable</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Serious Teams Treat Delivery as an Engineering System</h2>
+                    <p>Testing is not a QA phase. It is a design feedback loop from unit level to production telemetry. DevOps is not tooling only. It is operational responsibility embedded in development.</p>
+                </section>
+
+                <section class="section">
+                    <h3>9.1 Testing Pyramid for Java Systems</h3>
+                    <ul>
+                        <li>Unit tests: deterministic domain behavior (JUnit 5 + AssertJ).</li>
+                        <li>Integration tests: infrastructure contract checks (Testcontainers).</li>
+                        <li>API contract tests: consumer/provider alignment.</li>
+                        <li>End-to-end smoke tests: core user journey confidence.</li>
+                    </ul>
+                    <pre><code>@Test
+void shouldComputeOrderTotal() {
+    var order = Order.create("cust-1", List.of(new OrderLine("p1", 2, 500)));
+    assertThat(order.totalCents()).isEqualTo(1000);
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>9.2 Integration Test with Testcontainers</h3>
+                    <pre><code>@Container
+static PostgreSQLContainer&lt;?&gt; postgres = new PostgreSQLContainer&lt;&gt;("postgres:16");
+
+@Test
+void shouldPersistOrder() {
+    OrderRepository repo = new JdbcOrderRepository(postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword());
+    repo.save(Order.create("c-11", List.of(new OrderLine("a", 1, 2200))));
+    assertThat(repo.findAll()).hasSize(1);
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>9.3 CI/CD Pipeline Standard</h3>
+                    <ol>
+                        <li>Static checks (format, lint, SAST, dependency vulnerabilities).</li>
+                        <li>Unit + integration tests with coverage threshold policy.</li>
+                        <li>Container image build and signing.</li>
+                        <li>Progressive deployment: canary or blue/green.</li>
+                        <li>Auto rollback on SLO breach.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>9.4 Observability and Incident Readiness</h3>
+                    <ul>
+                        <li>Use OpenTelemetry for traces and metrics.</li>
+                        <li>Log with request IDs and domain identifiers.</li>
+                        <li>Track golden signals: latency, traffic, errors, saturation.</li>
+                        <li>Run game days for failure simulation.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

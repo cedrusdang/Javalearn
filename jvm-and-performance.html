@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3 | JVM, Memory, Performance</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH3</div><div><h1>JVM, Memory, Performance</h1><p>Understand runtime mechanics before tuning production</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar">
+                <h2>Book Chapters</h2>
+                <ul class="nav-list">
+                    <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li>
+                    <li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li>
+                    <li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li>
+                    <li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li>
+                    <li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li>
+                    <li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li>
+                    <li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+                </ul>
+            </aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Performance Engineering Is a Method, Not a JVM Flag List</h2>
+                    <p>Java performance quality depends on modeling allocations, understanding GC pressure, avoiding accidental contention, and observing with metrics. Blind tuning creates regressions.</p>
+                </section>
+
+                <section class="section">
+                    <h3>3.1 JVM Memory Areas</h3>
+                    <ul>
+                        <li>Heap: object allocation and garbage collection.</li>
+                        <li>Stack: call frames, local variables, references.</li>
+                        <li>Metaspace: class metadata (native memory).</li>
+                        <li>Code cache: JIT-compiled machine code.</li>
+                    </ul>
+                    <p>Latency spikes usually map to allocation bursts, lock contention, or external IO stalls.</p>
+                </section>
+
+                <section class="section">
+                    <h3>3.2 Garbage Collectors</h3>
+                    <div class="card-grid">
+                        <article class="card"><h4>G1</h4><p>General purpose, balanced default for many services.</p></article>
+                        <article class="card"><h4>ZGC</h4><p>Ultra-low pause goals for large heaps and latency-sensitive systems.</p></article>
+                        <article class="card"><h4>Shenandoah</h4><p>Low-pause alternative with concurrent compaction focus.</p></article>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3>3.3 Practical Profiling Workflow</h3>
+                    <ol>
+                        <li>Set SLO/SLA targets first: p95, p99, throughput, error rate.</li>
+                        <li>Collect baseline metrics under representative load.</li>
+                        <li>Use async-profiler/JFR for CPU and allocation hotspots.</li>
+                        <li>Change one variable at a time and compare.</li>
+                    </ol>
+                    <pre><code>// Example: allocation-aware data transform
+public List&lt;String&gt; normalized(List&lt;String&gt; input) {
+    return input.stream()
+        .map(String::trim)
+        .filter(s -> !s.isEmpty())
+        .map(String::toLowerCase)
+        .toList();
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>3.4 Concurrency Hazards</h3>
+                    <ul>
+                        <li>Race conditions from mutable shared objects.</li>
+                        <li>Thread pool starvation when tasks block unexpectedly.</li>
+                        <li>False sharing and cache-line contention in hot loops.</li>
+                    </ul>
+                    <pre><code>private final ConcurrentHashMap&lt;String, LongAdder&gt; counters = new ConcurrentHashMap&lt;&gt;();
+
+public void mark(String key) {
+    counters.computeIfAbsent(key, k -> new LongAdder()).increment();
+}</code></pre>
+                    <p>Choose lock-free or contention-friendly structures before adding more threads.</p>
+                </section>
+
+                <section class="section">
+                    <h3>3.5 High-Impact JVM Flags (Start Conservatively)</h3>
+                    <pre><code>java -XX:+UseZGC -XX:MaxRAMPercentage=70 -XX:+HeapDumpOnOutOfMemoryError \
+     -XX:HeapDumpPath=/tmp -Xlog:gc*:file=gc.log:time,uptime,level,tags \
+     -jar app.jar</code></pre>
+                    <p class="note">Always validate with load tests. Correct architecture beats aggressive flags.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

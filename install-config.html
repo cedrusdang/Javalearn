@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 0.5 | Install and Configuration Blueprint</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">SETUP</div><div><h1>Install and Configuration Blueprint</h1><p>From local machine to production-ready Java environments</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Bootcamp Setup Standard</h2>
+                    <p>This chapter closes the practical gap: exactly what to install, how to configure it, and how to keep environments reproducible across backend, frontend, desktop, and Android tracks.</p>
+                    <p class="note">Philosophy: no "it works on my machine". Every setup step must be scripted, versioned, and documented.</p>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.1 Required Toolchain</h3>
+                    <ul>
+                        <li>JDK: use Java 21 LTS minimum, test Java 25 where available.</li>
+                        <li>Build: Maven 3.9+ or Gradle 8.7+.</li>
+                        <li>IDE: IntelliJ IDEA or VS Code with Java extension pack.</li>
+                        <li>Runtime support: Docker, Docker Compose, Git, and a modern shell.</li>
+                        <li>Android track: Android Studio, Android SDK Platform, emulator image.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.2 JDK Install Patterns</h3>
+                    <h4>SDKMAN Strategy (Linux/macOS)</h4>
+                    <pre><code>curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 21.0.6-tem
+sdk install java 25.ea.4-open
+sdk default java 21.0.6-tem
+java -version</code></pre>
+                    <h4>Version Manager Rule</h4>
+                    <p>Pin exact versions per repository with <span class="inline-code">.sdkmanrc</span> or <span class="inline-code">.tool-versions</span>.</p>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.3 Maven and Gradle Baselines</h3>
+                    <h4>Maven <span class="inline-code">pom.xml</span> skeleton</h4>
+                    <pre><code>&lt;properties&gt;
+  &lt;maven.compiler.release&gt;21&lt;/maven.compiler.release&gt;
+  &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+&lt;/properties&gt;
+
+&lt;build&gt;
+  &lt;plugins&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.13.0&lt;/version&gt;
+      &lt;configuration&gt;
+        &lt;release&gt;21&lt;/release&gt;
+      &lt;/configuration&gt;
+    &lt;/plugin&gt;
+    &lt;plugin&gt;
+      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.5.2&lt;/version&gt;
+    &lt;/plugin&gt;
+  &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+                    <h4>Gradle <span class="inline-code">build.gradle</span> baseline</h4>
+                    <pre><code>plugins {
+    id 'java'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.4 Project Configuration by Track</h3>
+                    <div class="card-grid">
+                        <article class="card">
+                            <h4>Backend (Spring)</h4>
+                            <p>Use <span class="inline-code">application.yml</span> with profile overlays: dev, test, prod. Keep secrets in environment variables, not in source.</p>
+                        </article>
+                        <article class="card">
+                            <h4>Frontend (Java UI)</h4>
+                            <p>Separate UI routing config, API endpoint config, and security/session config. Make API base URL profile-aware.</p>
+                        </article>
+                        <article class="card">
+                            <h4>Desktop (JavaFX)</h4>
+                            <p>Split UI config, service endpoint config, and local cache path config. Support offline mode fallback config.</p>
+                        </article>
+                        <article class="card">
+                            <h4>Mobile (Android Java)</h4>
+                            <p>Define build variants (dev/staging/prod), endpoint per flavor, and secure credential storage in Keystore.</p>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.5 Spring Config Example</h3>
+                    <pre><code>server:
+  port: 8080
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/app}
+    username: ${DB_USER:app}
+    password: ${DB_PASS:app}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus</code></pre>
+                    <p>Use profile files such as <span class="inline-code">application-dev.yml</span> and <span class="inline-code">application-prod.yml</span> for environment-specific values.</p>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.6 Docker Compose for Local Infra</h3>
+                    <pre><code>services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    ports:
+      - "5432:5432"
+
+  kafka:
+    image: bitnami/kafka:3.8
+    ports:
+      - "9092:9092"</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.7 Config Governance Rules</h3>
+                    <ol>
+                        <li>Classify every configuration key: secret, runtime, build-time, or feature flag.</li>
+                        <li>Document default value, owner team, and rollback strategy.</li>
+                        <li>Validate mandatory configs at startup and fail fast.</li>
+                        <li>Never mix dev defaults into production images.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>0.5.8 Troubleshooting Matrix</h3>
+                    <ul>
+                        <li>Build mismatch: check Java toolchain version and compiler release setting.</li>
+                        <li>Runtime crash on desktop: verify JavaFX modules and packaging runtime image.</li>
+                        <li>Android network failure: inspect flavor endpoint config and TLS certificates.</li>
+                        <li>Backend startup fail: check environment variable bindings and database connectivity.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

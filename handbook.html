@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 11 | Code Snippet Handbook</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH11</div><div><h1>Code Snippet Handbook</h1><p>Case-driven snippets for daily engineering work</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Use This Like a Field Manual</h2>
+                    <p>Snippets are grouped by real cases across backend, frontend, desktop, and mobile. Copy, adapt, and review against your architecture constraints.</p>
+                </section>
+
+                <section class="section">
+                    <h3>BE Case 1: Idempotent API Endpoint</h3>
+                    <pre><code>public ResponseEntity&lt;OrderResponse&gt; createOrder(
+    @RequestHeader("Idempotency-Key") String key,
+    @RequestBody CreateOrderRequest req
+) {
+    return idempotencyService.process(key, () -> {
+        Order order = createOrderService.execute(req.customerId(), req.lines());
+        return ResponseEntity.status(HttpStatus.CREATED).body(OrderResponse.from(order));
+    });
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>BE Case 2: Resilient HTTP Client</h3>
+                    <pre><code>HttpClient client = HttpClient.newBuilder()
+    .connectTimeout(Duration.ofSeconds(2))
+    .build();
+
+HttpRequest req = HttpRequest.newBuilder(URI.create(url))
+    .timeout(Duration.ofSeconds(3))
+    .header("Accept", "application/json")
+    .GET()
+    .build();
+
+HttpResponse&lt;String&gt; res = client.send(req, HttpResponse.BodyHandlers.ofString());</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>FE Case: Server-Side Java UI Filtered Grid</h3>
+                    <pre><code>TextField query = new TextField("Search");
+Grid&lt;CustomerDto&gt; grid = new Grid&lt;&gt;(CustomerDto.class, false);
+query.addValueChangeListener(ev -> grid.setItems(service.search(ev.getValue())));
+add(query, grid);</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>Desktop Case: Background Task with UI Update</h3>
+                    <pre><code>Task&lt;List&lt;EventRow&gt;&gt; task = new Task&lt;&gt;() {
+    @Override
+    protected List&lt;EventRow&gt; call() {
+        return eventService.fetchLatest();
+    }
+};
+
+task.setOnSucceeded(e -> table.setItems(FXCollections.observableArrayList(task.getValue())));
+new Thread(task).start();</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>Mobile Case: Retry Wrapper</h3>
+                    <pre><code>public &lt;T&gt; T retry(int maxAttempts, Supplier&lt;T&gt; action) {
+    RuntimeException last = null;
+    for (int i = 1; i &lt;= maxAttempts; i++) {
+        try { return action.get(); }
+        catch (RuntimeException ex) { last = ex; }
+    }
+    throw last;
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>Cross-Cutting Case: Structured Logging</h3>
+                    <pre><code>log.info("order-confirmed orderId={} customerId={} amount={} currency={}",
+    order.id(), order.customerId(), order.totalCents(), order.currency());</code></pre>
+                    <p class="note">Never log secrets or raw PII. Apply masking and data governance policies.</p>
+                </section>
+
+                                <section class="section">
+                                        <h3>Config Case 1: Spring Profile-Gated Bean</h3>
+                                        <pre><code>@Configuration
+public class StorageConfig {
+        @Bean
+        @Profile("dev")
+        StorageClient devStorageClient() {
+                return new LocalStorageClient("/tmp/app-storage");
+        }
+
+        @Bean
+        @Profile("prod")
+        StorageClient prodStorageClient() {
+                return new S3StorageClient(System.getenv("S3_BUCKET"));
+        }
+}</code></pre>
+                                </section>
+
+                                <section class="section">
+                                        <h3>Config Case 2: Environment Validation on Startup</h3>
+                                        <pre><code>public final class EnvCheck {
+        public static void require(String key) {
+                String value = System.getenv(key);
+                if (value == null || value.isBlank()) {
+                        throw new IllegalStateException("Missing required environment variable: " + key);
+                }
+        }
+}
+
+// In app startup:
+EnvCheck.require("DB_URL");
+EnvCheck.require("JWT_PUBLIC_KEY");</code></pre>
+                                </section>
+
+                                <section class="section">
+                                        <h3>Config Case 3: Maven Toolchain Pinning</h3>
+                                        <pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-toolchains-plugin&lt;/artifactId&gt;
+    &lt;version&gt;3.2.0&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;toolchain&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+    &lt;configuration&gt;
+        &lt;toolchains&gt;
+            &lt;jdk&gt;
+                &lt;version&gt;21&lt;/version&gt;
+            &lt;/jdk&gt;
+        &lt;/toolchains&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+                                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

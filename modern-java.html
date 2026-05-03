@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2 | Modern Java (17-25)</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH2</div><div><h1>Modern Java (17-25)</h1><p>Use modern language features, not Java 8 habits</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar">
+                <h2>Book Chapters</h2>
+                <ul class="nav-list">
+                    <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li>
+                    <li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li>
+                    <li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li>
+                    <li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li>
+                    <li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li>
+                    <li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li>
+                    <li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+                </ul>
+            </aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Write Java as of 2026, Not 2016</h2>
+                    <p>Modern Java emphasizes expressiveness with records, pattern matching, sealed hierarchies, virtual threads, structured concurrency, and clearer APIs. The fastest way to level up is replacing legacy ceremony with intentional modeling.</p>
+                </section>
+
+                <section class="section">
+                    <h3>2.1 Records for Data-Centric Modeling</h3>
+                    <pre><code>public record Trade(String symbol, int quantity, double price) {
+    public Trade {
+        if (quantity &lt;= 0) throw new IllegalArgumentException("quantity must be positive");
+        if (price &lt;= 0) throw new IllegalArgumentException("price must be positive");
+    }
+
+    public double notional() {
+        return quantity * price;
+    }
+}</code></pre>
+                    <p>Records remove boilerplate while preserving explicit domain constraints.</p>
+                </section>
+
+                <section class="section">
+                    <h3>2.2 Sealed Types + Pattern Matching</h3>
+                    <pre><code>sealed interface PaymentResult permits Success, Declined, FraudFlagged {}
+record Success(String transactionId) implements PaymentResult {}
+record Declined(String reason) implements PaymentResult {}
+record FraudFlagged(String rule) implements PaymentResult {}
+
+String render(PaymentResult result) {
+    return switch (result) {
+        case Success s -> "Approved: " + s.transactionId();
+        case Declined d -> "Declined: " + d.reason();
+        case FraudFlagged f -> "Investigate: " + f.rule();
+    };
+}</code></pre>
+                    <p>This gives exhaustive handling at compile-time, similar to algebraic data types.</p>
+                </section>
+
+                <section class="section">
+                    <h3>2.3 Virtual Threads (Project Loom)</h3>
+                    <pre><code>try (var executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor()) {
+    List&lt;Future&lt;String&gt;&gt; tasks = IntStream.range(0, 1000)
+        .mapToObj(i -> executor.submit(() -> fetchRemoteData(i)))
+        .toList();
+
+    for (Future&lt;String&gt; task : tasks) {
+        System.out.println(task.get());
+    }
+}</code></pre>
+                    <p>For IO-heavy workloads, virtual threads simplify concurrency without reactive complexity.</p>
+                </section>
+
+                <section class="section">
+                    <h3>2.4 Scoped Values and Structured Concurrency</h3>
+                    <ul>
+                        <li>Scoped values are safer than thread-locals for request context.</li>
+                        <li>Structured concurrency aligns child-task lifecycle with request lifecycle.</li>
+                        <li>Together, they reduce leak-prone async code.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>2.5 API Upgrades You Should Use</h3>
+                    <ul>
+                        <li><span class="inline-code">HttpClient</span> for HTTP calls with HTTP/2 support.</li>
+                        <li><span class="inline-code">Files.readString / writeString</span> for concise file operations.</li>
+                        <li><span class="inline-code">Stream.toList()</span> for immutable collection pipelines.</li>
+                        <li><span class="inline-code">Optional.orElseThrow()</span> for explicit failure behavior.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>Migration Checklist</h3>
+                    <ol>
+                        <li>Replace mutable DTOs with records where suitable.</li>
+                        <li>Replace giant if-else trees with sealed + switch pattern matching.</li>
+                        <li>Benchmark virtual threads for IO services before adopting reactive stacks.</li>
+                        <li>Enforce modern style in code reviews.</li>
+                    </ol>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 10 | Guided Tutorials</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH10</div><div><h1>Guided Tutorials</h1><p>Hands-on tracks from beginner-to-production mindset</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Tutorial Pathways</h2>
+                    <p>Follow these in sequence. Each tutorial includes objective, constraints, implementation steps, and extension tasks. Build each project in a dedicated repository and tag milestones.</p>
+                </section>
+
+                <section class="section">
+                    <h3>Tutorial A: CLI Data Transformer (2-3 hours)</h3>
+                    <ol>
+                        <li>Input CSV, output JSON summary grouped by category.</li>
+                        <li>Model records and parser abstraction.</li>
+                        <li>Implement stream transformations and validation errors.</li>
+                        <li>Add unit tests for malformed lines and edge cases.</li>
+                    </ol>
+                    <pre><code>record SalesRow(String category, int units, double price) {}
+
+Map&lt;String, Double&gt; totalByCategory = rows.stream()
+    .collect(Collectors.groupingBy(SalesRow::category,
+        Collectors.summingDouble(r -> r.units() * r.price())));</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>Tutorial B: Spring Boot Order API (1 day)</h3>
+                    <ol>
+                        <li>Create endpoint <span class="inline-code">POST /orders</span> and <span class="inline-code">GET /orders/{id}</span>.</li>
+                        <li>Use DTO validation and service layer separation.</li>
+                        <li>Persist with PostgreSQL and migration scripts.</li>
+                        <li>Add integration tests with Testcontainers.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>Tutorial C: JavaFX Ops Dashboard (1 day)</h3>
+                    <ol>
+                        <li>Render system events table with filters.</li>
+                        <li>Background polling via scheduled executor.</li>
+                        <li>Charting for event rate trends.</li>
+                        <li>Package desktop installer using jpackage.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>Tutorial D: Android Profile App (1-2 days)</h3>
+                    <ol>
+                        <li>List + details screen with repository abstraction.</li>
+                        <li>Offline cache via Room database.</li>
+                        <li>Retry strategy for failed network requests.</li>
+                        <li>UI tests for primary flows.</li>
+                    </ol>
+                </section>
+
+                <section class="section">
+                    <h3>Tutorial E: End-to-End Distributed Workflow (2 days)</h3>
+                    <ol>
+                        <li>Order service publishes event to queue.</li>
+                        <li>Billing service consumes event and updates state.</li>
+                        <li>Use outbox and idempotent consumer logic.</li>
+                        <li>Add observability traces and chaos testing scenarios.</li>
+                    </ol>
+                    <p class="note">Bootcamp rule: no tutorial is done unless you can explain trade-offs and failure modes.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

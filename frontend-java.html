@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5 | Frontend with Java</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH5</div><div><h1>Frontend with Java</h1><p>Server-driven UI and JVM-to-web options</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>Java Frontend Is Viable in Specific Product Contexts</h2>
+                    <p>If your team is backend-heavy and needs fast internal tools, Java server-side UI frameworks can drastically reduce context switching. For consumer-rich web experiences, pair Java backend with TypeScript frontend.</p>
+                </section>
+
+                <section class="section">
+                    <h3>5.1 Main Java-Frontend Routes</h3>
+                    <div class="card-grid">
+                        <article class="card"><h4>Vaadin</h4><p>Component-based web UI in Java. Great for enterprise dashboards and internal tooling.</p></article>
+                        <article class="card"><h4>JTE/Thymeleaf</h4><p>Server-rendered templates with progressive enhancement.</p></article>
+                        <article class="card"><h4>TeaVM / GWT-like paths</h4><p>Compile Java to JavaScript/WASM for niche requirements.</p></article>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3>5.2 Vaadin Example</h3>
+                    <pre><code>@Route("orders")
+public class OrderView extends VerticalLayout {
+    public OrderView(OrderService service) {
+        var grid = new Grid&lt;OrderDto&gt;(OrderDto.class, false);
+        grid.addColumn(OrderDto::id).setHeader("ID");
+        grid.addColumn(OrderDto::status).setHeader("Status");
+        grid.setItems(service.findRecentOrders());
+
+        var refresh = new Button("Refresh", e -> grid.setItems(service.findRecentOrders()));
+        add(refresh, grid);
+    }
+}</code></pre>
+                    <p>This keeps backend and UI language consistent while preserving strong typing.</p>
+                </section>
+
+                <section class="section">
+                    <h3>5.3 FE Architecture Thinking for Java Teams</h3>
+                    <ul>
+                        <li>View model transformation belongs to application layer, not entity layer.</li>
+                        <li>Avoid leaking persistence entities to UI components.</li>
+                        <li>Use DTO contracts and explicit mappers.</li>
+                        <li>Treat UX latency budgets as first-class non-functional requirements.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>5.4 Hybrid Strategy (Recommended in Most Cases)</h3>
+                    <p>Use Java backend with REST/GraphQL APIs and TypeScript React/Vue frontend for consumer apps. Keep Java frontend stacks for internal enterprise systems where development speed and consistency outrank pixel-level customization.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

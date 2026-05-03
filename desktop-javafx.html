@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6 | Desktop with JavaFX</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/scripts.js" defer></script>
+</head>
+<body>
+    <div class="book-shell">
+        <header class="topbar">
+            <div class="brand"><div class="brand-badge">CH6</div><div><h1>Desktop with JavaFX</h1><p>Native-feeling desktop products on the JVM</p></div></div>
+            <button id="themeToggle" class="theme-toggle">Switch Theme</button>
+        </header>
+        <div class="grid">
+            <aside class="sidebar"><h2>Book Chapters</h2><ul class="nav-list">
+                <li><a href="index.html">0. Start Here</a></li><li><a href="install-config.html">0.5 Install and Config</a></li><li><a href="core-syntax.html">1. Core Syntax and OOP</a></li><li><a href="modern-java.html">2. Modern Java (17-25)</a></li><li><a href="jvm-and-performance.html">3. JVM, Memory, Performance</a></li><li><a href="backend-enterprise.html">4. Backend Engineering</a></li><li><a href="frontend-java.html">5. Frontend with Java</a></li><li><a href="desktop-javafx.html">6. Desktop with JavaFX</a></li><li><a href="mobile-android.html">7. Mobile with Java/Android</a></li><li><a href="architecture-design.html">8. Architecture and Design Theory</a></li><li><a href="testing-devops.html">9. Testing, DevOps, Delivery</a></li><li><a href="tutorials.html">10. Guided Tutorials</a></li><li><a href="handbook.html">11. Code Snippet Handbook</a></li><li><a href="capstone-roadmap.html">12. Capstone and 12-Week Plan</a></li>
+            </ul></aside>
+            <main class="content">
+                <section class="hero">
+                    <h2>JavaFX for Tooling, Operations, and Rich Clients</h2>
+                    <p>JavaFX remains practical for internal desktop systems, simulation tools, scientific interfaces, and operations consoles where JVM integration and maintainability matter more than cross-platform web constraints.</p>
+                </section>
+
+                <section class="section">
+                    <h3>6.1 JavaFX Architecture</h3>
+                    <ul>
+                        <li>Use MVVM or MVP to isolate presentation state.</li>
+                        <li>Move network and heavy computations off the UI thread.</li>
+                        <li>Use observable properties for reactive view updates.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>6.2 JavaFX Starter</h3>
+                    <pre><code>public class InventoryApp extends Application {
+    @Override
+    public void start(Stage stage) {
+        var table = new TableView&lt;InventoryItem&gt;();
+        var nameCol = new TableColumn&lt;InventoryItem, String&gt;("Name");
+        nameCol.setCellValueFactory(data -> data.getValue().nameProperty());
+
+        table.getColumns().add(nameCol);
+        table.setItems(FXCollections.observableArrayList(
+            new InventoryItem("Router"),
+            new InventoryItem("Switch")
+        ));
+
+        stage.setScene(new Scene(new VBox(table), 680, 420));
+        stage.setTitle("Inventory Console");
+        stage.show();
+    }
+}</code></pre>
+                </section>
+
+                <section class="section">
+                    <h3>6.3 Packaging and Distribution</h3>
+                    <ul>
+                        <li>Use <span class="inline-code">jlink</span> to create runtime images.</li>
+                        <li>Use <span class="inline-code">jpackage</span> for platform installers.</li>
+                        <li>Sign binaries for enterprise distribution policies.</li>
+                    </ul>
+                </section>
+
+                <section class="section">
+                    <h3>6.4 Desktop Engineering Checklist</h3>
+                    <ol>
+                        <li>Design offline and reconnect behavior explicitly.</li>
+                        <li>Use local encrypted storage for tokens/credentials.</li>
+                        <li>Implement crash telemetry and user-friendly incident logs.</li>
+                        <li>Decouple UI from persistence and external integrations.</li>
+                    </ol>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
